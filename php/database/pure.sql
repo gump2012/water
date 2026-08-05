@@ -10273,7 +10273,7 @@ CREATE TABLE `vendor` (
   `service_fee_rate` decimal(10,2) DEFAULT NULL COMMENT '服务费比例',
   `fee_rate` decimal(10,2) DEFAULT NULL COMMENT '手续费比例',
   PRIMARY KEY (`vendor_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='供应商表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='供应商表';
 
 -- ----------------------------
 -- Records of vendor
@@ -10297,7 +10297,7 @@ CREATE TABLE `vendor_account` (
   PRIMARY KEY (`account_id`) USING BTREE,
   KEY `account_type` (`account_type`) USING BTREE,
   KEY `vendor_id` (`vendor_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='供应商账户表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='供应商账户表';
 
 -- ----------------------------
 -- Records of vendor_account
