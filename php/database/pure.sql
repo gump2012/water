@@ -964,6 +964,8 @@ CREATE TABLE `category` (
   `sort_order` smallint unsigned NOT NULL DEFAULT '50' COMMENT '该分类在页面显示的顺序,数字越大顺序越靠后,同数字,id在前的先显示',
   `measure_unit` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '该分类的计量单位',
   `is_show` tinyint unsigned NOT NULL DEFAULT '1' COMMENT '是否在前台页面显示 1显示; 0不显示',
+  `is_show_category` tinyint unsigned NOT NULL DEFAULT '1' COMMENT '是否在默认分类页面显示',
+  `is_show_water` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '是否在订水页面显示',
   `seo_title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT 'SEO标题',
   `short_name` varchar(80) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '分类短名',
   `category_pic` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '分类图片',
