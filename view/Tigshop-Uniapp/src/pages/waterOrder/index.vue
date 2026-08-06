@@ -6,13 +6,14 @@
             <view class="scroll-box">
                 <view class="content-box">
                     <view class="side">
-                        <menuBox v-model:current-cate-id="currentCateId" @change="reset" />
+                        <menuBox type="water" v-model:current-cate-id="currentCateId" @change="reset" />
                     </view>
                     <view class="list-box">
                         <selectCate
                             v-model:menu-list="menuList"
                             v-model:sub-current-cate-id="subCurrentCateId"
                             type="main"
+                            categoryType="water"
                             :current-cate-id="currentCateId"
                             @change="handleChange"
                         />

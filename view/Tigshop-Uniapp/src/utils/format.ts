@@ -113,8 +113,13 @@ const baseList = [
     },
     {
         name: "订水",
+        link: "/pages/waterOrder/index",
+        url: "/pages/waterOrder/index"
+    },
+    {
+        name: "订水（旧链接兼容）",
         link: "/pages/water/index",
-        url: "/pages/water/index"
+        url: "/pages/waterOrder/index"
     }
 ];
 
