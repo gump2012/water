@@ -117,6 +117,9 @@ class CategoryService extends BaseService
     public function updateCategory(int $id, array $data): bool
     {
         $result = $this->categoryModel->where('category_id', $id)->save($data);
+        cache('catList_all', null);
+        cache('catList_category', null);
+        cache('catList_water', null);
         cache('catList', null, 0, 'cat');
         return $result !== false;
     }
@@ -129,6 +132,9 @@ class CategoryService extends BaseService
     public function createCategory(array $data): int
     {
         $result = $this->categoryModel->save($data);
+        cache('catList_all', null);
+        cache('catList_category', null);
+        cache('catList_water', null);
         cache('catList', null, 0, 'cat');
         return $this->categoryModel->getKey();
     }
@@ -148,6 +154,9 @@ class CategoryService extends BaseService
             throw new ApiException('#id错误');
         }
         $result = $this->categoryModel::where('category_id', $id)->save($data);
+        cache('catList_all', null);
+        cache('catList_category', null);
+        cache('catList_water', null);
         cache('catList', null, 0, 'cat');
         AdminLog::add('更新分类:' . $this->getName($id));
         return $result !== false;
@@ -164,7 +173,10 @@ class CategoryService extends BaseService
         $get_name = $this->getName($id);
         $result = $this->categoryModel::destroy($id);
         if ($result) {
-            cache('catList', null, 0, 'cat');
+            cache('catList_all', null);
+        cache('catList_category', null);
+        cache('catList_water', null);
+        cache('catList', null, 0, 'cat');
 			Product::where('category_id', $id)->update(['category_id' => 0]);
             AdminLog::add('删除分类:' . $get_name);
         }
