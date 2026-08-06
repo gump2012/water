@@ -11,7 +11,7 @@ export function isAuthorized() {
     }
     return isAuth
 }
-const poweredBytxt = " - powered by tigshop"
+const poweredBytxt = ""
 // 修改路由标题 是否授权  - powered by tigshop
 export function processRoutes(routes: any[]) {
     if (!accessToken) {
@@ -55,7 +55,7 @@ import enterprise_authorization from '@/style/images/enterprise_authorization.pn
 import enterprise_authorization_pro from '@/style/images/enterprise_authorization_pro.png';
 // 授权判断, 后台头像授权是否显示
 export function isShowAvatar() {
-   // 授权判断 未授权 0  商业授权 1 商业授权pro 2  企业授权 3 企业授权pro 4
+    // 授权判断 未授权 0  商业授权 1 商业授权pro 2  企业授权 3 企业授权pro 4
     let url = no_licensed;
     if (licensedData.isEnterprise == 0) {
         if (licensedData.versionType.includes('pro')) {
