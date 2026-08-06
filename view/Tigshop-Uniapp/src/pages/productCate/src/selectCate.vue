@@ -46,6 +46,10 @@ const props = defineProps({
     type: {
         type: String,
         default: ""
+    },
+    categoryType: {
+        type: String,
+        default: "category"
     }
 });
 const emit = defineEmits(["change"]);
@@ -58,7 +62,7 @@ const menuList = defineModel<filterSeleted[]>("menuList", {
 });
 const getMenuList = async (id: number) => {
     try {
-        const result = await getCategoryList(id);
+        const result = await getCategoryList(id, props.categoryType);
         menuList.value = [{ categoryId: 0, categoryName: t("全部商品") }, ...result];
         emit("change");
         scrollLeft.value = 0;

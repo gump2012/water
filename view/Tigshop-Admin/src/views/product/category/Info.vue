@@ -51,6 +51,18 @@
                             <el-radio :value="0">否</el-radio>
                         </el-radio-group>
                     </el-form-item>
+                    <el-form-item label="在分类页显示" prop="isShowCategory">
+                        <el-radio-group v-model="formState.isShowCategory">
+                            <el-radio :value="1">是</el-radio>
+                            <el-radio :value="0">否</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="在订水页显示" prop="isShowWater">
+                        <el-radio-group v-model="formState.isShowWater">
+                            <el-radio :value="1">是</el-radio>
+                            <el-radio :value="0">否</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
                     <el-form-item v-show="!props.isDialog" :wrapper-col="{ offset: 4, span: 16 }">
                         <el-button ref="submitBtn" class="form-submit-btn" type="primary" @click="onSubmit">提交 </el-button>
                     </el-form-item>
@@ -101,6 +113,8 @@ const operation = action.value === "add" ? "create" : "update";
 const formRef = shallowRef();
 const formState = ref<CategoryFormState>({
     isShow: 1,
+    isShowCategory: 1,
+    isShowWater: 0,
     sortOrder: 50
 });
 const fetchCategory = async () => {

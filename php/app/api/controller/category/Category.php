@@ -61,7 +61,8 @@ class Category extends IndexBaseController
     public function list(): Response
     {
         $id = $this->request->all('id/d', 0);
-        $list = app(CategoryService::class)->catList($id);
+        $type = $this->request->all('type', '');
+        $list = app(CategoryService::class)->catList($id, $type);
         return $this->success(isset($list['category_id']) ? [] : $list);
     }
 
@@ -71,7 +72,8 @@ class Category extends IndexBaseController
      */
     public function all(): Response
     {
-        $list = app(CategoryService::class)->catList();
+        $type = $this->request->all('type', '');
+        $list = app(CategoryService::class)->catList(0, $type);
         return $this->success($list);
     }
 

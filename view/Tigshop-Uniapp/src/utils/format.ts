@@ -110,11 +110,16 @@ const baseList = [
         name: "店铺列表",
         link: "shop/list",
         url: "/pages/shop/list"
+    },
+    {
+        name: "订水",
+        link: "/pages/water/index",
+        url: "/pages/water/index"
     }
 ];
 
 // 链接格式化
-export function urlFormat(params: string | { path: string; [key: string]: any }): string {
+export function urlFormat(params: string | { path: string;[key: string]: any }): string {
     if (!params) return "";
     if (typeof params === "string") {
         return params;

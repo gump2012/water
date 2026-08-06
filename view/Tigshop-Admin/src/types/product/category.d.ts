@@ -17,6 +17,8 @@ export interface CategoryFilterState {
     measureUnit: string;
     isHot: number;
     isShow: number;
+    isShowCategory: number;
+    isShowWater: number;
     sortOrder: number;
 }
 export interface CategoryFilterResult {
@@ -24,7 +26,7 @@ export interface CategoryFilterResult {
     filter: {
         page: number;
     };
-    parentName:string;
+    parentName: string;
     total: number;
 }
 
@@ -44,9 +46,11 @@ export interface CategoryFormState {
     sortOrder?: number;
     isHot?: number;
     isShow?: number;
+    isShowCategory?: number;
+    isShowWater?: number;
 }
 
 export interface CategoryMoveState {
-    id?:number;
+    id?: number;
     targetCatId?: number;
 }

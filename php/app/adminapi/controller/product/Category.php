@@ -133,6 +133,8 @@ class Category extends AdminBaseController
             'category_desc' => '',
             'is_hot' => 0,
             'is_show' => 0,
+            'is_show_category' => 1,
+            'is_show_water' => 0,
             'sort_order' => 50,
         ], 'post');
 
@@ -194,7 +196,7 @@ class Category extends AdminBaseController
         $id =$this->request->all('id/d');
         $field =$this->request->all('field');
 
-        if (!in_array($field, ['category_name', 'measure_unit', 'is_hot', 'is_show', 'sort_order'])) {
+        if (!in_array($field, ['category_name', 'measure_unit', 'is_hot', 'is_show', 'sort_order', 'is_show_category', 'is_show_water'])) {
             return $this->error('#field 错误');
         }
 

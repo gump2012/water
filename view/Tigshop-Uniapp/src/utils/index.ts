@@ -26,6 +26,7 @@ export const isJsonString = (str: string): boolean => {
  * @returns
  */
 export function isUrl(str: string): boolean {
+    if (!str) return false;
     return str.indexOf("http://") != -1 || str.indexOf("https://") != -1;
 }
 

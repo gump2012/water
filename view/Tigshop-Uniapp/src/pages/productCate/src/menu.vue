@@ -19,11 +19,18 @@ const currentCateId = defineModel<number>("currentCateId");
 
 const emit = defineEmits(["change"]);
 
+const props = defineProps({
+    type: {
+        type: String,
+        default: "category"
+    }
+});
+
 const menuList = shallowRef<filterSeleted[]>([]);
 
 const getMenuList = async () => {
     try {
-        const result = await getCategoryList(0);
+        const result = await getCategoryList(0, props.type);
         menuList.value = result;
         currentCateId.value = result[0].categoryId;
     } catch (error) {

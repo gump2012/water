@@ -195,15 +195,21 @@ class CategoryService extends BaseService
      * @param bool $return_ids 是否返回分类id列表
      * @return array
      */
-    public function catList(int $category_id = 0): array
+    public function catList(int $category_id = 0, string $type = ''): array
     {
-        $data = cache('catList');
+        $cacheKey = 'catList_' . ($type ?: 'all');
+        $data = cache($cacheKey);
         if (empty($data)) {
-            $cat_list = $this->categoryModel->alias('c')->field('c.category_id, c.category_name, c.parent_id,c.category_pic')
-                ->where('c.is_show',1)
-                ->order('c.parent_id, c.sort_order ASC, c.category_id ASC')->where("c.is_show", 1)->select();
+            $query = $this->categoryModel->alias('c')->field('c.category_id, c.category_name, c.parent_id,c.category_pic')
+                ->where('c.is_show',1);
+            if ($type === 'water') {
+                $query->where('c.is_show_water', 1);
+            } elseif ($type === 'category') {
+                $query->where('c.is_show_category', 1);
+            }
+            $cat_list = $query->order('c.parent_id, c.sort_order ASC, c.category_id ASC')->select();
             $cat_list = $cat_list ? $cat_list->toArray() : [];
-            cache('catList', $cat_list, 86400 * 100, 'cat');
+            cache($cacheKey, $cat_list, 86400 * 100, 'cat');
         } else {
             $cat_list = $data;
         }

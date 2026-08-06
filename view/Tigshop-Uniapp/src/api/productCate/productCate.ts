@@ -1,9 +1,9 @@
 import request from "@/utils/request";
 import type { SearchFilterResult } from "@/types/productCate/productCate";
-// 获取商品分类
-export const getCategoryAll = () => {
+// 获取全部分类列表
+export const getCategoryAll = (type: string = "category") => {
     return request<SearchFilterResult>({
-        url: "category/category/all",
+        url: `category/category/all?type=${type}`,
         method: "get"
     });
 };
@@ -23,9 +23,9 @@ export const getCategoryTree = (id: number) => {
 };
 
 // 获取指定分类列表
-export const getCategoryList = (id: number) => {
+export const getCategoryList = (id: number, type: string = "category") => {
     return request<SearchFilterResult>({
-        url: "category/category/list?id=" + id,
+        url: `category/category/list?id=${id}&type=${type}`,
         method: "get",
         cancelPrevious: true,
         requestKey: "categoryList"
