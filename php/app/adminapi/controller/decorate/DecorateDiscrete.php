@@ -71,8 +71,8 @@ class DecorateDiscrete extends AdminBaseController
             [
                 'type' => 'default',
                 'pic_title' => '账号管理',
-                'pic_thumb' => 'https://oss.tigshop.com/static/user/zhanghaoguanli.png',
-                'pic_url' => 'https://oss.tigshop.com/static/user/zhanghaoguanli.png',
+                'pic_thumb' => 'https://img.lxxshop.com/static/user/zhanghaoguanli.png',
+                'pic_url' => 'https://img.lxxshop.com/static/user/zhanghaoguanli.png',
                 'pic_link' => [
                     'path' => 'default',
                     'label' => '账号管理',
@@ -83,8 +83,8 @@ class DecorateDiscrete extends AdminBaseController
             [
                 'type' => 'default',
                 'pic_title' => '收货地址',
-                'pic_thumb' => 'https://oss.tigshop.com/static/user/shouhuodizhi.png',
-                'pic_url' => 'https://oss.tigshop.com/static/user/shouhuodizhi.png',
+                'pic_thumb' => 'https://img.lxxshop.com/static/user/shouhuodizhi.png',
+                'pic_url' => 'https://img.lxxshop.com/static/user/shouhuodizhi.png',
                 'pic_link' => [
                     'path' => 'default',
                     'label' => '收货地址',
@@ -96,8 +96,8 @@ class DecorateDiscrete extends AdminBaseController
             [
                 'type' => 'default',
                 'pic_title' => '发票管理',
-                'pic_thumb' => 'https://oss.tigshop.com/static/user/fapiao.png',
-                'pic_url' => 'https://oss.tigshop.com/static/user/fapiao.png',
+                'pic_thumb' => 'https://img.lxxshop.com/static/user/fapiao.png',
+                'pic_url' => 'https://img.lxxshop.com/static/user/fapiao.png',
                 'pic_link' => [
                     'path' => 'default',
                     'label' => '发票管理',
@@ -108,8 +108,8 @@ class DecorateDiscrete extends AdminBaseController
             [
                 'type' => 'default',
                 'pic_title' => '站内消息',
-                'pic_thumb' => 'https://oss.tigshop.com/static/user/xiaoxi.png',
-                'pic_url' => 'https://oss.tigshop.com/static/user/xiaoxi.png',
+                'pic_thumb' => 'https://img.lxxshop.com/static/user/xiaoxi.png',
+                'pic_url' => 'https://img.lxxshop.com/static/user/xiaoxi.png',
                 'pic_link' => [
                     'path' => 'default',
                     'label' => '站内消息',
@@ -120,8 +120,8 @@ class DecorateDiscrete extends AdminBaseController
             [
                 'type' => 'default',
                 'pic_title' => '帮助中心',
-                'pic_thumb' => 'https://oss.tigshop.com/static/user/issue.png',
-                'pic_url' => 'https://oss.tigshop.com/static/user/issue.png',
+                'pic_thumb' => 'https://img.lxxshop.com/static/user/issue.png',
+                'pic_url' => 'https://img.lxxshop.com/static/user/issue.png',
                 'pic_link' => [
                     'path' => 'default',
                     'label' => '帮助中心',
@@ -132,8 +132,8 @@ class DecorateDiscrete extends AdminBaseController
             [
                 'type' => 'default',
                 'pic_title' => '资讯中心',
-                'pic_thumb' => 'https://oss.tigshop.com/static/user/news.png',
-                'pic_url' => 'https://oss.tigshop.com/static/user/news.png',
+                'pic_thumb' => 'https://img.lxxshop.com/static/user/news.png',
+                'pic_url' => 'https://img.lxxshop.com/static/user/news.png',
                 'pic_link' => [
                     'path' => 'default',
                     'label' => '资讯中心',
