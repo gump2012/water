@@ -25,7 +25,7 @@
                                     <a>查看示例</a>
                                 </template>
                                 <template #default>
-                                    <img src="https://oss.tigshop.com/img/gallery/202507/1753684560T8OSH0XHLs8kXZKODe.jpeg" style="width: 380px" />
+                                    <img src="https://img.lxxshop.com/img/gallery/202501/1753684560T8OSH0XHLs8kXZKODe.jpeg" style="width: 380px" />
                                 </template>
                             </el-popover>
                         </div>
@@ -39,7 +39,7 @@
                                     <a>查看示例</a>
                                 </template>
                                 <template #default>
-                                    <img src="https://oss.tigshop.com/img/gallery/202507/1753768520lp0CnlW3J9YOgwBS1P.jpg" style="width: 380px" />
+                                    <img src="https://img.lxxshop.com/img/gallery/202501/1753768520lp0CnlW3J9YOgwBS1P.jpg" style="width: 380px" />
                                 </template>
                             </el-popover>
                         </div>
@@ -53,7 +53,7 @@
                                     <a>查看示例</a>
                                 </template>
                                 <template #default>
-                                    <img src="https://oss.tigshop.com/img/gallery/202507/1753768520XcpUlaVT9k5Gdp5SD5.jpg" style="width: 380px" />
+                                    <img src="https://img.lxxshop.com/img/gallery/202501/1753768520XcpUlaVT9k5Gdp5SD5.jpg" style="width: 380px" />
                                 </template>
                             </el-popover>
                         </div>

@@ -18,7 +18,7 @@
                 <div class="value"></div>
             </div>
             <div class="dec-edit-group-con">
-                <PicSelect v-model:photo="module.icoPic " :default-value="{picUrl:'https://oss.tigshop.com/img/gallery/202508/1754895669bP3iJSUiXSBoRB1VQq.png'}"></PicSelect>
+                <PicSelect v-model:photo="module.icoPic " :default-value="{picUrl:'https://img.lxxshop.com/img/gallery/202501/1754895669bP3iJSUiXSBoRB1VQq.png'}"></PicSelect>
             </div>
         </div>
         <CommonFrameEdit v-model="module.frame" type="notice"></CommonFrameEdit>

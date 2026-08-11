@@ -32,8 +32,8 @@ import { imageFormat } from "@/utils/format";
 
 const url = {
     picId: 1516,
-    picThumb: "https://oss.tigshop.com/img/gallery/202411/1732167975uqaGwJU2aHObkmOmpb.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-    picUrl: "https://oss.tigshop.com/img/gallery/202411/1732167975uqaGwJU2aHObkmOmpb.png",
+    picThumb: "https://img.lxxshop.com/img/gallery/202501/1732167975uqaGwJU2aHObkmOmpb.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+    picUrl: "https://img.lxxshop.com/img/gallery/202501/1732167975uqaGwJU2aHObkmOmpb.png",
     picName: "FhZQpeGm_m6BK7kV9qd0Phm5ToF"
 };
 const module = defineModel<ModuleType & ModuleArticleType>("module") as Ref<ModuleType & ModuleArticleType>;

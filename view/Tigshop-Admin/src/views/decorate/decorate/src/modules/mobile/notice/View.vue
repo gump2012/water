@@ -33,7 +33,7 @@ const defaultModule = ref({
     frame: defaultFrame
 });
 mergeDefaultModule(module.value, defaultModule.value);
-module.value.icoPic.picUrl='https://oss.tigshop.com/img/gallery/202508/1754895669bP3iJSUiXSBoRB1VQq.png'
+module.value.icoPic.picUrl='https://img.lxxshop.com/img/gallery/202501/1754895669bP3iJSUiXSBoRB1VQq.png'
 const { frame } = module.value;
 const frameFormat = computed(() => {
     return formatFrame(frame ?? {});

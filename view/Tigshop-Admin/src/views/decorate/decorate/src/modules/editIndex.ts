@@ -69,8 +69,8 @@ export const ModuleTheme = {
         gradientColorB: "#ff7b19",
         countdownBackgroundPic: {
             picId: 1480,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/1731908843qTonhlo5Iw9kRJdLN1.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/1731908843qTonhlo5Iw9kRJdLN1.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/1731908843qTonhlo5Iw9kRJdLN1.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/1731908843qTonhlo5Iw9kRJdLN1.png",
             picName: "orange"
         }
     },
@@ -80,8 +80,8 @@ export const ModuleTheme = {
         gradientColorB: "#ff856c",
         countdownBackgroundPic: {
             picId: 1487,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/1731908847AN8bNRFsYO681hzol5.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/1731908847AN8bNRFsYO681hzol5.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/1731908847AN8bNRFsYO681hzol5.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/1731908847AN8bNRFsYO681hzol5.png",
             picName: "red"
         }
     },
@@ -91,8 +91,8 @@ export const ModuleTheme = {
         gradientColorB: "#7faff5",
         countdownBackgroundPic: {
             picId: 1484,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/17319088431TGhqdiHX3OhNWUiJJ.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/17319088431TGhqdiHX3OhNWUiJJ.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/17319088431TGhqdiHX3OhNWUiJJ.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/17319088431TGhqdiHX3OhNWUiJJ.png",
             picName: "blue"
         }
     },
@@ -102,8 +102,8 @@ export const ModuleTheme = {
         gradientColorB: "#64d135",
         countdownBackgroundPic: {
             picId: 1485,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/1731908843bO258L7j1eq3dPeJTM.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/1731908843bO258L7j1eq3dPeJTM.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/1731908843bO258L7j1eq3dPeJTM.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/1731908843bO258L7j1eq3dPeJTM.png",
             picName: "green"
         }
     },
@@ -113,8 +113,8 @@ export const ModuleTheme = {
         gradientColorB: "#8456e3",
         countdownBackgroundPic: {
             picId: 1486,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/1731908846cfUWqho3wrh0l9xD0A.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/1731908846cfUWqho3wrh0l9xD0A.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/1731908846cfUWqho3wrh0l9xD0A.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/1731908846cfUWqho3wrh0l9xD0A.png",
             picName: "purple"
         }
     },
@@ -124,8 +124,8 @@ export const ModuleTheme = {
         gradientColorB: "#6d6d6d",
         countdownBackgroundPic: {
             picId: 1481,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/1731908843sz1aJohktlFTfhDGsY.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/1731908843sz1aJohktlFTfhDGsY.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/1731908843sz1aJohktlFTfhDGsY.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/1731908843sz1aJohktlFTfhDGsY.png",
             picName: "grey"
         }
     },
@@ -135,8 +135,8 @@ export const ModuleTheme = {
         gradientColorB: "#603929",
         countdownBackgroundPic: {
             picId: 1482,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/1731908843dIqndLbjKR48vEYrS0.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/1731908843dIqndLbjKR48vEYrS0.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/1731908843dIqndLbjKR48vEYrS0.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/1731908843dIqndLbjKR48vEYrS0.png",
             picName: "chocolate"
         }
     },
@@ -146,8 +146,8 @@ export const ModuleTheme = {
         gradientColorB: "#c19270",
         countdownBackgroundPic: {
             picId: 1483,
-            picThumb: "https://oss.tigshop.com/img/gallery/202411/1731908843tbYlP36vnX8NbNyvHG.png?x-oss-process=image/resize,m_pad,h_200,h_200",
-            picUrl: "https://oss.tigshop.com/img/gallery/202411/1731908843tbYlP36vnX8NbNyvHG.png",
+            picThumb: "https://img.lxxshop.com/img/gallery/202501/1731908843tbYlP36vnX8NbNyvHG.png?x-oss-process=image/resize,m_pad,h_200,h_200",
+            picUrl: "https://img.lxxshop.com/img/gallery/202501/1731908843tbYlP36vnX8NbNyvHG.png",
             picName: "brown"
         }
     }

@@ -94,7 +94,7 @@ const formState = ref<UserFormState>({
         {
             rankLevel: 1, // 会员等级
             rankName: "黄金会员", // 会员名称
-            rankLogo: "https://oss.tigshop.com/img/gallery/202501/1735803176Yh9mCaE2r9ebXK3bGm.png" // 会员logo
+            rankLogo: "https://img.lxxshop.com/img/gallery/202501/1735803176Yh9mCaE2r9ebXK3bGm.png" // 会员logo
         }
     ]
 });
@@ -118,16 +118,16 @@ const fetchUser = async () => {
     }
 };
 const vipIcons = [
-    "https://oss.tigshop.com/img/gallery/202501/1737524324ro1DJxNm3aQowZKnPU.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324ZUrDWMFqTPMBTCOlhg.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324ptLNB2WynLJBBwSHHj.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324hhmoz188M0ejyXEBhT.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324O1BXVeurAyDMj9QG8f.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324T7eKXTpMiCeVQOyFb6.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324bUufpiVaGcaUad1CWd.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324NhZbUn45wj1eSaIbjY.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324bv68MBsoQXa2rLUO9i.png",
-    "https://oss.tigshop.com/img/gallery/202501/1737524324urqONY3QDjaTqW7d56.png"
+    "https://img.lxxshop.com/img/gallery/202501/1737524324ro1DJxNm3aQowZKnPU.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324ZUrDWMFqTPMBTCOlhg.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324ptLNB2WynLJBBwSHHj.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324hhmoz188M0ejyXEBhT.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324O1BXVeurAyDMj9QG8f.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324T7eKXTpMiCeVQOyFb6.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324bUufpiVaGcaUad1CWd.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324NhZbUn45wj1eSaIbjY.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324bv68MBsoQXa2rLUO9i.png",
+    "https://img.lxxshop.com/img/gallery/202501/1737524324urqONY3QDjaTqW7d56.png"
 ];
 
 const addPreferential = async () => {
