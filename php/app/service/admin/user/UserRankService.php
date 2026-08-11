@@ -122,7 +122,7 @@ class UserRankService extends BaseService
                 [
                     'rank_level' => 1,
                     'rank_name' => '黄金会员',
-                    'rank_logo' => 'https://oss.tigshop.com/img/gallery/202501/1737524324ro1DJxNm3aQowZKnPU.png',
+                    'rank_logo' => 'https://img.lxxshop.com/img/gallery/1737524324ro1DJxNm3aQowZKnPU.png',
                     'rank_card_type' => 1,
                     'rank_ico' => 'card1',
                     'rank_bg' => '',
@@ -137,7 +137,7 @@ class UserRankService extends BaseService
                 [
                     'rank_level' => 1,
                     'rank_name' => '黄金会员',
-                    'rank_logo' => 'https://oss.tigshop.com/img/gallery/202501/1735803176Yh9mCaE2r9ebXK3bGm.png',
+                    'rank_logo' => 'https://img.lxxshop.com/img/gallery/1735803176Yh9mCaE2r9ebXK3bGm.png',
                 ]
             ]
         ];
