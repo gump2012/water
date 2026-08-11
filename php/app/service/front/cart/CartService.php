@@ -341,7 +341,7 @@ class CartService extends BaseService
                     'user_id' => $item['user_id'],
                     'product_id' => 999999,
                     'product_sn' => 'DEPOSIT_BARREL',
-                    'pic_thumb' => 'https://oss.tigshop.com/img/gallery/demo/1680161428TG65DFJamaB4B4ErOC!!pic200x200.png',
+                    'pic_thumb' => 'https://img.lxxshop.com/img/gallery/demo/1680161428TG65DFJamaB4B4ErOC!!pic200x200.png',
                     'market_price' => 50.00,
                     'original_price' => 50.00,
                     'price' => 50.00,
@@ -359,7 +359,7 @@ class CartService extends BaseService
                         'product_name' => '水桶押金 (退桶时可退还)',
                         'product_sn' => 'DEPOSIT_BARREL',
                         'product_status' => 1,
-                        'pic_thumb' => 'https://oss.tigshop.com/img/gallery/demo/1680161428TG65DFJamaB4B4ErOC!!pic200x200.png',
+                        'pic_thumb' => 'https://img.lxxshop.com/img/gallery/demo/1680161428TG65DFJamaB4B4ErOC!!pic200x200.png',
                     ],
                     'sku' => null,
                     'shop' => $item['shop'] ?? null
