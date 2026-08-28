@@ -195,106 +195,179 @@
             ]
         },
         {
-            "root": "pages/user",
+            "root": "pages/user/afterSale",
             "pages": [
                 {
-                    "path": "afterSale/edit"
+                    "path": "edit"
                 },
                 {
-                    "path": "messageLog/index"
+                    "path": "info"
                 },
                 {
-                    "path": "afterSale/info"
+                    "path": "list"
                 },
                 {
-                    "path": "afterSale/list"
+                    "path": "negotiate"
                 },
                 {
-                    "path": "afterSale/negotiate"
+                    "path": "shipments"
                 },
                 {
-                    "path": "afterSale/shipments"
+                    "path": "leaveMessage"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/messageLog",
+            "pages": [
+                {
+                    "path": "index"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/comment",
+            "pages": [
+                {
+                    "path": "list"
                 },
                 {
-                    "path": "comment/list"
+                    "path": "info"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/security",
+            "pages": [
+                {
+                    "path": "phone"
                 },
                 {
-                    "path": "security/phone"
+                    "path": "newPhone"
                 },
                 {
-                    "path": "security/newPhone"
+                    "path": "email"
                 },
                 {
-                    "path": "security/email"
-                },
+                    "path": "password"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/account",
+            "pages": [
                 {
-                    "path": "account/index",
+                    "path": "index",
                     "style": {}
                 },
                 {
-                    "path": "account/cardManagement/list",
+                    "path": "cardManagement/list",
                     "style": {}
                 },
                 {
-                    "path": "account/cardManagement/edit",
+                    "path": "cardManagement/edit",
+                    "style": {}
+                }
+            ]
+        },
+        {
+            "root": "pages/user/historyProduct",
+            "pages": [
+                {
+                    "path": "index"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/order",
+            "pages": [
+                {
+                    "path": "list"
+                },
+                {
+                    "path": "info"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/profile",
+            "pages": [
+                {
+                    "path": "index"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/collectProduct",
+            "pages": [
+                {
+                    "path": "index"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/invoiceManagement",
+            "pages": [
+                {
+                    "path": "index"
+                },
+                {
+                    "path": "applyInvoice",
                     "style": {}
                 },
                 {
-                    "path": "historyProduct/index"
+                    "path": "invoiceInfo",
+                    "style": {}
                 },
                 {
-                    "path": "order/list"
+                    "path": "src/imageView",
+                    "style": {}
+                }
+            ]
+        },
+        {
+            "root": "pages/user/point",
+            "pages": [
+                {
+                    "path": "detail"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/merchantEnter",
+            "pages": [
+                {
+                    "path": "index"
                 },
                 {
-                    "path": "order/info"
+                    "path": "principalType"
                 },
                 {
-                    "path": "profile/index"
-                },
+                    "path": "agreement"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/bindMobilePhone",
+            "pages": [
                 {
-                    "path": "collectProduct/index"
-                },
+                    "path": "index"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/ranks",
+            "pages": [
                 {
-                    "path": "comment/info"
-                },
+                    "path": "index"
+                }
+            ]
+        },
+        {
+            "root": "pages/user/userCertification",
+            "pages": [
                 {
-                    "path": "afterSale/leaveMessage"
-                },
-                {
-                    "path": "invoiceManagement/index"
-                },
-                {
-                    "path": "invoiceManagement/applyInvoice"
-                },
-                {
-                    "path": "invoiceManagement/invoiceInfo"
-                },
-                {
-                    "path": "invoiceManagement/src/imageView"
-                },
-                {
-                    "path": "security/password"
-                },
-                {
-                    "path": "point/detail"
-                },
-                {
-                    "path": "merchantEnter/index"
-                },
-                {
-                    "path": "merchantEnter/principalType"
-                },
-                {
-                    "path": "merchantEnter/agreement"
-                },
-                {
-                    "path": "bindMobilePhone/index"
-                },
-                {
-                    "path": "ranks/index"
-                },
-                {
-                    "path": "userCertification/index"
+                    "path": "index"
                 }
             ]
         }

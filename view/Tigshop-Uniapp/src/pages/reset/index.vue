@@ -7,7 +7,7 @@
                     <stepOne v-model:step="step" v-model:mobile-key="mobileKey" />
                 </block>
                 <up-transition :show="step === 2" :mode="'fade-left'">
-                    <stepTow v-model:step="step" v-model:mobile-key="mobileKey" />
+                    <stepTwo v-model:step="step" v-model:mobile-key="mobileKey" />
                 </up-transition>
             </view>
         </tig-layout>
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import stepOne from "./src/stepOne.vue";
-import stepTow from "./src/stepTow..vue";
+import stepTwo from "./src/stepTwo.vue";
 const step = ref(1);
 const mobileKey = ref("");
 </script>
