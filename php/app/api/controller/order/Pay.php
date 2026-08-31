@@ -125,6 +125,7 @@ class Pay extends IndexBaseController
      */
     public function create(): Response
     {
+        \think\facade\Log::info('【支付接口请求进入 Pay::create】参数：' . json_encode($this->request->all(), JSON_UNESCAPED_UNICODE));
         $order_id = $this->request->all('id/d', 0);
         $pay_type = $this->request->all('type', '');
         if (empty($pay_type)) {
