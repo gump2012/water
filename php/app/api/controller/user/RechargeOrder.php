@@ -124,6 +124,7 @@ class RechargeOrder extends IndexBaseController
      */
     public function create(): Response
     {
+        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' RechargeOrder::create called params: ' . json_encode($this->request->all(), JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
         $order_id = $this->request->all('id/d', 0);
         $pay_type = $this->request->all('type', '');
         if (empty($pay_type)) {
