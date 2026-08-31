@@ -236,6 +236,7 @@ class WechatPayService extends PayService
      */
     public function MiniPay(array $order): array
     {
+        \think\facade\Log::info('【微信小程序支付进入 MiniPay 方法】订单数据：' . json_encode($order, JSON_UNESCAPED_UNICODE));
         try {
             $openid = $order['openid'];
             if (empty($openid)) {

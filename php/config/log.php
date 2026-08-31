@@ -37,7 +37,7 @@ return [
             // 日志输出格式化
             'format'         => '[%s][%s] %s',
             // 是否实时写入
-            'realtime_write' => false,
+            'realtime_write' => true,
         ],
         'sms_log' => [ //短信日志
             // 日志记录方式
