@@ -287,7 +287,7 @@ class WechatPayService extends PayService
         //查询是否是服务商模式
         $config = Config::getConfig();
         $wechat_mchid_type = $config['wechatMchidType'] ?? 1;
-        $sp_mchid = $config['wechatPaySubMchid'];
+        $sp_mchid = $config['wechatPaySubMchid'] ?? '';
         if ($wechat_mchid_type == 2 && !empty($sp_mchid)) {
             //服务商模式
             $data = [
@@ -421,12 +421,15 @@ class WechatPayService extends PayService
                 'timeout' => 5.0,
             ],
         ];
-        if (isset($cfg['wechatPayCheckType'])) {
-            if ($cfg['wechatPayCheckType'] == 2) {
+        if (isset($cfg['wechatPayCheckType']) && $cfg['wechatPayCheckType'] == 2) {
+            $publicKeyId = $cfg['wechatPayPublicKeyId'] ?? '';
+            if (!empty($publicKeyId)) {
                 //微信支付公钥方式
                 $config['platform_certs'] = [
-                    $cfg['wechatPayPublicKeyId'] => app()->getRootPath() . '/runtime/certs/wechat/public_key.pem',
+                    $publicKeyId => app()->getRootPath() . '/runtime/certs/wechat/public_key.pem',
                 ];
+            } else {
+                \think\facade\Log::error('【微信支付报错排查】已开启公钥模式(wechatPayCheckType=2)，但在后台配置中缺少 wechatPayPublicKeyId (微信支付公钥ID)');
             }
         }
         return new Application($config);
