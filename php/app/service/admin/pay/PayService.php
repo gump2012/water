@@ -31,13 +31,27 @@ abstract class PayService
     abstract public function refund_notify(): array;
 
     /**
+     * 获取请求域名（防空保护）
+     * @return string
+     */
+    public function getDomain(): string
+    {
+        $domain = Config::get('pcDomain');
+        if (empty($domain)) {
+            $scheme = $_SERVER['REQUEST_SCHEME'] ?? ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
+            $host = $_SERVER['HTTP_HOST'] ?? (request()->host() ?: 'localhost');
+            $domain = $scheme . '://' . $host;
+        }
+        return rtrim($domain, '/');
+    }
+
+    /**
      * 获取支付回调
      * @return string
      */
     public function getNotifyUrl(string $pay_code = ''): string
     {
-        $domain = Config::get('pcDomain');
-        if (empty($domain)) $domain = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+        $domain = $this->getDomain();
         $notify_url = $domain . '/api/order/pay/notify';
         if ($pay_code) $notify_url .= '?payCode=' . $pay_code;
 
@@ -50,8 +64,7 @@ abstract class PayService
      */
     public function getRefundNotifyUrl(string $pay_code = ''): string
     {
-        $domain = Config::get('pcDomain');
-        if (empty($domain)) $domain = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+        $domain = $this->getDomain();
         $refund_url = $domain . '/api/order/pay/refundNotify';
         if ($pay_code) $refund_url .= '?pay_code=' . $pay_code;
 
@@ -65,8 +78,7 @@ abstract class PayService
      */
     public function getReturnUrl(int $order_id = 0): string
     {
-        $domain = Config::get('pcDomain');
-        if (empty($domain)) $domain = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+        $domain = $this->getDomain();
         if ($order_id) {
             return $domain . '/member/order/info?id=' . $order_id;
         }
