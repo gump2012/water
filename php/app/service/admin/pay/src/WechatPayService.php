@@ -250,6 +250,7 @@ class WechatPayService extends PayService
             $utils = $this->getApplication()->getUtils();
             return $utils->buildMiniAppConfig($res['prepay_id'], $this->appId, 'RSA');
         } catch (\Exception $exception) {
+            \think\facade\Log::error('【微信小程序支付发起失败日志】' . $exception->getMessage() . ' Trace: ' . $exception->getTraceAsString());
             throw new ApiException(Util::lang('支付发起失败：') . $exception->getMessage());
         }
     }
