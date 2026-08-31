@@ -176,7 +176,8 @@ class WechatPayService extends PayService
             $response = $this->getApplication()->getClient()->postJson('/v3/pay/transactions/jsapi', $this->getPayData($order['pay_sn'], $order['order_amount'], '', $openid));
             $res = $response->toArray(false);
             if (!isset($res['prepay_id'])) {
-                throw new ApiException($res['message']);
+                $errMsg = $res['message'] ?? $res['detail']['message'] ?? $res['code'] ?? json_encode($res, JSON_UNESCAPED_UNICODE);
+                throw new ApiException($errMsg);
             }
             $utils = $this->getApplication()->getUtils();
 
@@ -213,7 +214,8 @@ class WechatPayService extends PayService
             $response = $this->getApplication()->getClient()->postJson('/v3/pay/transactions/app', $this->getPayData($order['pay_sn'], $order['order_amount']));
             $res = $response->toArray(false);
             if (!isset($res['prepay_id'])) {
-                throw new ApiException($res['message']);
+                $errMsg = $res['message'] ?? $res['detail']['message'] ?? $res['code'] ?? json_encode($res, JSON_UNESCAPED_UNICODE);
+                throw new ApiException($errMsg);
             }
             $utils = $this->getApplication()->getUtils();
 
@@ -242,7 +244,8 @@ class WechatPayService extends PayService
             $response = $this->getApplication()->getClient()->postJson('/v3/pay/transactions/jsapi', $this->getPayData($order['pay_sn'], $order['order_amount'], '', $openid));
             $res = $response->toArray(false);
             if (!isset($res['prepay_id'])) {
-                throw new ApiException(Util::lang($res['message']));
+                $errMsg = $res['message'] ?? $res['detail']['message'] ?? $res['code'] ?? json_encode($res, JSON_UNESCAPED_UNICODE);
+                throw new ApiException(Util::lang($errMsg));
             }
             $utils = $this->getApplication()->getUtils();
             return $utils->buildMiniAppConfig($res['prepay_id'], $this->appId, 'RSA');
@@ -407,12 +410,12 @@ class WechatPayService extends PayService
         //平台证书序列号
         $cfg = Config::getConfig();
         $config = [
-            'mch_id' => $cfg['wechatPayMchid'],
+            'mch_id' => $cfg['wechatPayMchid'] ?? '',
             // 商户证书
             'private_key' => app()->getRootPath() . '/runtime/certs/wechat/apiclient_key.pem',
             'certificate' => app()->getRootPath() . '/runtime/certs/wechat/apiclient_cert.pem',
             // v3 API 秘钥
-            'secret_key' => $cfg['wechatPayKey'],
+            'secret_key' => $cfg['wechatPayKey'] ?? '',
             'platform_certs' => [
                 app()->getRootPath() . '/runtime/certs/wechat/cert.pem',
             ],
