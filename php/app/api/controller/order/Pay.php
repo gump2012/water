@@ -135,10 +135,22 @@ class Pay extends IndexBaseController
         $code = $this->request->all('code', '');
         $openid = '';
         if (!empty($code)) {
-            $openid = app(WechatOAuthService::class)->getMiniOpenid($code);
+            try {
+                $openid = app(WechatOAuthService::class)->getMiniOpenid($code);
+                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 1: Got openid=' . $openid . "\n", FILE_APPEND);
+            } catch (\Exception $e) {
+                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 1 ERROR getMiniOpenid: ' . $e->getMessage() . "\n", FILE_APPEND);
+                throw $e;
+            }
         }
         $orderDetail = app(OrderDetailService::class)->setId($order_id)->setUserId(request()->userId);
-        $orderDetail->checkActionAvailable('to_pay');
+        try {
+            $orderDetail->checkActionAvailable('to_pay');
+            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 2: checkActionAvailable OK' . "\n", FILE_APPEND);
+        } catch (\Exception $e) {
+            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 2 ERROR checkActionAvailable: ' . $e->getMessage() . "\n", FILE_APPEND);
+            throw $e;
+        }
         $order = $orderDetail->getOrder()->toArray();
         $order['order_type'] = 0;
         $order['pay_code'] = $pay_type;
@@ -149,7 +161,9 @@ class Pay extends IndexBaseController
         try {
             switch ($pay_type) {
                 case 'wechat':
+                    @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 3: Calling WechatPayService::pay' . "\n", FILE_APPEND);
                     $res = app(WechatPayService::class)->pay($pay_params);
+                    @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 4: WechatPayService::pay SUCCESS result: ' . json_encode($res, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
                     break;
                 case 'alipay':
                     $res = app(AliPayService::class)->pay($pay_params);
