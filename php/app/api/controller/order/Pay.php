@@ -105,9 +105,26 @@ class Pay extends IndexBaseController
 
         if (!empty($order_id)) {
             $pay_status = app(OrderService::class)->getPayStatus($order_id);
+            $pay_log = app(PayLogService::class)->getPayLogByOrderId($order_id);
         } else {
             $pay_status = app(PayLogService::class)->getPayStatus($pay_log_id);
+            $pay_log = app(PayLogService::class)->getPayLogById($pay_log_id);
         }
+
+        // 双重保障：若本地状态未支付，主动向微信/支付网关反查订单真实支付状态
+        if ($pay_status == 0 && !empty($pay_log['pay_sn'])) {
+            try {
+                $queryRes = app(WechatPayService::class)->queryOrderPay($pay_log['pay_sn']);
+                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [checkStatus Active Query] pay_sn=' . $pay_log['pay_sn'] . ', queryRes=' . json_encode($queryRes, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+                if (isset($queryRes['trade_state']) && $queryRes['trade_state'] === 'SUCCESS') {
+                    app(PaymentService::class)->paySuccess($pay_log['pay_sn'], $queryRes['transaction_id'] ?? '', $queryRes['appid'] ?? '');
+                    $pay_status = 1;
+                }
+            } catch (\Exception $e) {
+                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [checkStatus Active Query Exception] ' . $e->getMessage() . "\n", FILE_APPEND);
+            }
+        }
+
         return $this->success($pay_status > 0 ? 1 : 0);
     }
 

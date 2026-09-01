@@ -52,6 +52,9 @@ abstract class PayService
     public function getNotifyUrl(string $pay_code = ''): string
     {
         $domain = $this->getDomain();
+        if (str_starts_with($domain, 'http://')) {
+            $domain = 'https://' . substr($domain, 7);
+        }
         $notify_url = $domain . '/api/order/pay/notify';
         if ($pay_code) $notify_url .= '?payCode=' . $pay_code;
 
@@ -65,6 +68,9 @@ abstract class PayService
     public function getRefundNotifyUrl(string $pay_code = ''): string
     {
         $domain = $this->getDomain();
+        if (str_starts_with($domain, 'http://')) {
+            $domain = 'https://' . substr($domain, 7);
+        }
         $refund_url = $domain . '/api/order/pay/refundNotify';
         if ($pay_code) $refund_url .= '?pay_code=' . $pay_code;
 
