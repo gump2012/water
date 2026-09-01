@@ -33,7 +33,7 @@ class Config
             $val = isset($config[$name]) ? $config[$name] : $default;
         }
 
-        if ($name === 'wechatMiniProgramAppId') {
+        if ($name === 'wechatMiniProgramAppId' && empty($val)) {
             $logMsg = date('Y-m-d H:i:s') . ' [Config::get] name=' . $name . ', val=' . var_export($val, true) . ', key_exists_in_cached_config=' . (isset($config[$name]) ? 'true' : 'false') . "\n";
             @file_put_contents(app()->getRootPath() . 'runtime/test_pay.log', $logMsg, FILE_APPEND);
 
