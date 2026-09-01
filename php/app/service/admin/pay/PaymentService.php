@@ -95,15 +95,12 @@ class PaymentService extends BaseService
     public function paySuccess(string $pay_sn, string $transaction_id = '', string $appid = ''): void
     {
         $pay_log = app(PayLogService::class)->getPayLogByPaySn($pay_sn);
-        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [PaymentService::paySuccess] pay_sn=' . $pay_sn . ', pay_log=' . json_encode($pay_log, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
         \think\facade\Log::info('paySuccess - pay_sn: ' . $pay_sn . ', pay_log存在: ' . (!empty($pay_log) ? 'yes' : 'no') . ', pay_log数据: ' . json_encode($pay_log));
         if (!$pay_log || $pay_log['pay_status'] == 1) {
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [PaymentService::paySuccess] Skip, reason=' . (empty($pay_log) ? 'pay_log_not_found' : 'already_paid') . "\n", FILE_APPEND);
             \think\facade\Log::info('paySuccess - 跳过处理，原因: ' . (empty($pay_log) ? 'pay_log不存在' : '已支付(pay_status=1)'));
             return;
         }
         if (empty($pay_log['order_id'])) {
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . " [PaymentService::paySuccess] Skip, order_id is empty\n", FILE_APPEND);
             \think\facade\Log::info('paySuccess - 跳过处理，原因: order_id为空');
             return;
         }
@@ -114,7 +111,6 @@ class PaymentService extends BaseService
                 'transaction_id' => $transaction_id,
                 'appid' => $appid
             ]);
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [PaymentService::paySuccess] SUCCESS updated pay_status=1 for paylog_id=' . $pay_log['paylog_id'] . ', order_id=' . $pay_log['order_id'] . "\n", FILE_APPEND);
             \think\facade\Log::info('paySuccess - pay_status已更新为1, paylog_id: ' . $pay_log['paylog_id']);
             switch ($pay_log['order_type']) {
                 case 0:

@@ -60,7 +60,6 @@ class WechatPayService extends PayService
      */
     public function pay(array $order): array
     {
-        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' WechatPayService::pay payType=' . $this->getPayType() . "\n", FILE_APPEND);
         if (empty($order['pay_sn']) || empty($order['user_id']) || empty($order['order_amount'])) {
             throw new ApiException(Util::lang('缺少支付参数！'));
         }
@@ -85,7 +84,7 @@ class WechatPayService extends PayService
                     throw new ApiException(Util::lang('#无效支付类型'));
             }
         } catch (Exception $exception) {
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' WechatPayService::pay ERROR: ' . $exception->getMessage() . "\n", FILE_APPEND);
+            \think\facade\Log::error('WechatPayService::pay ERROR: ' . $exception->getMessage());
             throw new ApiException(Util::lang($exception->getMessage()));
 
         }
@@ -120,21 +119,17 @@ class WechatPayService extends PayService
     public function notify(): array
     {
         $rawContent = request()->getContent();
-        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] rawContent=' . $rawContent . "\n", FILE_APPEND);
         $message = json_decode($rawContent, true);
         if (empty($message)) {
             $message = request()->post();
         }
-        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] parsed message=' . json_encode($message, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
         if (isset($message['event_type']) && $message['event_type'] === 'TRANSACTION.SUCCESS') {
             $resource = $message['resource'];
             //1.解密参数
             $data = $this->decryptToString($resource['associated_data'], $resource['nonce'], $resource['ciphertext']);
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] decrypted data=' . var_export($data, true) . "\n", FILE_APPEND);
             $data = json_decode($data, true);
             //查询订单
             $query_data = $this->queryOrderPay($data['out_trade_no']);
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] queryOrderPay result=' . json_encode($query_data, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
             if (isset($query_data['trade_state']) && $query_data['trade_state'] == 'SUCCESS') {
                 //支付成功--设置订单已支付
                 $pay_sn = $query_data['out_trade_no'];
@@ -246,17 +241,14 @@ class WechatPayService extends PayService
      */
     public function MiniPay(array $order): array
     {
-        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Entered MiniPay, openid=' . ($order['openid'] ?? 'EMPTY') . "\n", FILE_APPEND);
         try {
             $openid = $order['openid'];
             if (empty($openid)) {
                 throw new ApiException(Util::lang('openid不能为空！'));
             }
             $payData = $this->getPayData($order['pay_sn'], $order['order_amount'], '', $openid);
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' MiniPay payData=' . json_encode($payData, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
             $response = $this->getApplication()->getClient()->postJson('/v3/pay/transactions/jsapi', $payData);
             $res = $response->toArray(false);
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' MiniPay WeChat response=' . json_encode($res, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
             if (!isset($res['prepay_id'])) {
                 $errMsg = $res['message'] ?? $res['detail']['message'] ?? $res['code'] ?? json_encode($res, JSON_UNESCAPED_UNICODE);
                 throw new ApiException(Util::lang($errMsg));
@@ -264,7 +256,6 @@ class WechatPayService extends PayService
             $utils = $this->getApplication()->getUtils();
             return $utils->buildMiniAppConfig($res['prepay_id'], $this->appId, 'RSA');
         } catch (\Exception $exception) {
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' MiniPay EXCEPTION: ' . $exception->getMessage() . "\nTrace: " . $exception->getTraceAsString() . "\n", FILE_APPEND);
             \think\facade\Log::error('【微信小程序支付发起失败日志】' . $exception->getMessage() . ' Trace: ' . $exception->getTraceAsString());
             throw new ApiException(Util::lang('支付发起失败：') . $exception->getMessage());
         }
@@ -419,8 +410,6 @@ class WechatPayService extends PayService
                 break;
             case self::MINI_PROGRAM_PAY:
                 $appid = Config::get('wechatMiniProgramAppId');
-                $logMsg = date('Y-m-d H:i:s') . ' [WechatPayService::getApplication] MINI_PROGRAM_PAY appid=' . var_export($appid, true) . "\n";
-                @file_put_contents(app()->getRootPath() . 'runtime/test_pay.log', $logMsg, FILE_APPEND);
                 if (empty($appid)) {
                     \think\facade\Log::error('【微信小程序支付错误】Config::get(\'wechatMiniProgramAppId\') 读取结果为空！请排查数据库 config 表 biz_code=wechatMiniProgramAppId 的记录，或重新在后台【系统设置】保存。');
                     throw new ApiException(Util::lang('请先在后台【系统设置】中配置微信小程序 AppID！'));

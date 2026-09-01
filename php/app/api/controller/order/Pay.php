@@ -115,13 +115,12 @@ class Pay extends IndexBaseController
         if ($pay_status == 0 && !empty($pay_log['pay_sn'])) {
             try {
                 $queryRes = app(WechatPayService::class)->queryOrderPay($pay_log['pay_sn']);
-                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [checkStatus Active Query] pay_sn=' . $pay_log['pay_sn'] . ', queryRes=' . json_encode($queryRes, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
                 if (isset($queryRes['trade_state']) && $queryRes['trade_state'] === 'SUCCESS') {
                     app(PaymentService::class)->paySuccess($pay_log['pay_sn'], $queryRes['transaction_id'] ?? '', $queryRes['appid'] ?? '');
                     $pay_status = 1;
                 }
             } catch (\Exception $e) {
-                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [checkStatus Active Query Exception] ' . $e->getMessage() . "\n", FILE_APPEND);
+                \think\facade\Log::error('checkStatus Active Query Exception: ' . $e->getMessage());
             }
         }
 
@@ -142,7 +141,6 @@ class Pay extends IndexBaseController
      */
     public function create(): Response
     {
-        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Pay::create called params: ' . json_encode($this->request->all(), JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
         \think\facade\Log::info('【支付接口请求进入 Pay::create】参数：' . json_encode($this->request->all(), JSON_UNESCAPED_UNICODE));
         $order_id = $this->request->all('id/d', 0);
         $pay_type = $this->request->all('type', '');
@@ -152,22 +150,10 @@ class Pay extends IndexBaseController
         $code = $this->request->all('code', '');
         $openid = '';
         if (!empty($code)) {
-            try {
-                $openid = app(WechatOAuthService::class)->getMiniOpenid($code);
-                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 1: Got openid=' . $openid . "\n", FILE_APPEND);
-            } catch (\Exception $e) {
-                @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 1 ERROR getMiniOpenid: ' . $e->getMessage() . "\n", FILE_APPEND);
-                throw $e;
-            }
+            $openid = app(WechatOAuthService::class)->getMiniOpenid($code);
         }
         $orderDetail = app(OrderDetailService::class)->setId($order_id)->setUserId(request()->userId);
-        try {
-            $orderDetail->checkActionAvailable('to_pay');
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 2: checkActionAvailable OK' . "\n", FILE_APPEND);
-        } catch (\Exception $e) {
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 2 ERROR checkActionAvailable: ' . $e->getMessage() . "\n", FILE_APPEND);
-            throw $e;
-        }
+        $orderDetail->checkActionAvailable('to_pay');
         $order = $orderDetail->getOrder()->toArray();
         $order['order_type'] = 0;
         $order['pay_code'] = $pay_type;
@@ -178,9 +164,7 @@ class Pay extends IndexBaseController
         try {
             switch ($pay_type) {
                 case 'wechat':
-                    @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 3: Calling WechatPayService::pay' . "\n", FILE_APPEND);
                     $res = app(WechatPayService::class)->pay($pay_params);
-                    @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' Step 4: WechatPayService::pay SUCCESS result: ' . json_encode($res, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
                     break;
                 case 'alipay':
                     $res = app(AliPayService::class)->pay($pay_params);
@@ -223,7 +207,6 @@ class Pay extends IndexBaseController
     public function notify(): string|Response
     {
         $pay_type = input('payCode', '');
-        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [Pay Controller] notify called, pay_type=' . var_export($pay_type, true) . "\n", FILE_APPEND);
         \think\facade\Log::info('支付回调：' . $pay_type);
         try {
             switch ($pay_type) {
@@ -246,7 +229,6 @@ class Pay extends IndexBaseController
                     $res = app(WechatPayService::class)->notify();
             }
         } catch (\Exception $exception) {
-            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [Pay Controller] notify EXCEPTION: ' . $exception->getMessage() . "\nTrace: " . $exception->getTraceAsString() . "\n", FILE_APPEND);
             \think\facade\Log::error('支付回调异常 [' . $pay_type . ']：' . $exception->getMessage() . ' trace: ' . $exception->getTraceAsString());
             return json_encode(['code' => 'FAIL', 'message' => Util::lang('失败')]);
         }

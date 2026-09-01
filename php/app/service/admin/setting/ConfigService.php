@@ -208,9 +208,6 @@ class ConfigService extends BaseService
         $result = $this->dealConfigData($data);
 
         $miniAppId = $result['wechatMiniProgramAppId'] ?? null;
-        $logMsg = date('Y-m-d H:i:s') . ' [ConfigService::getAllConfig] DB Read: exists_in_db=' . (isset($data['wechatMiniProgramAppId']) ? 'true' : 'false') . ', raw_db_val=' . var_export($data['wechatMiniProgramAppId'] ?? 'KEY_NOT_FOUND', true) . ', final_val=' . var_export($miniAppId, true) . "\n";
-        @file_put_contents(app()->getRootPath() . 'runtime/test_pay.log', $logMsg, FILE_APPEND);
-
         if (empty($miniAppId)) {
             Log::warning('【ConfigService::getAllConfig 排查】从数据库获取所有配置时 wechatMiniProgramAppId 为空或未设置', [
                 'exists_in_db' => isset($data['wechatMiniProgramAppId']),
