@@ -7,6 +7,7 @@ use app\model\setting\Region;
 use app\service\common\BaseService;
 use exceptions\ApiException;
 use log\AdminLog;
+use think\facade\Log;
 use utils\Config as UtilsConfig;
 use utils\Util;
 
@@ -204,7 +205,22 @@ class ConfigService extends BaseService
     public function getAllConfig(): ?array
     {
         $data = Config::column('biz_val', 'biz_code');
-        return $this->dealConfigData($data);
+        $result = $this->dealConfigData($data);
+
+        $miniAppId = $result['wechatMiniProgramAppId'] ?? null;
+        if (empty($miniAppId)) {
+            Log::warning('【ConfigService::getAllConfig 排查】从数据库获取所有配置时 wechatMiniProgramAppId 为空或未设置', [
+                'exists_in_db' => isset($data['wechatMiniProgramAppId']),
+                'raw_db_val' => $data['wechatMiniProgramAppId'] ?? 'KEY_NOT_FOUND',
+                'final_val' => $miniAppId,
+            ]);
+        } else {
+            Log::info('【ConfigService::getAllConfig】从数据库成功读取 wechatMiniProgramAppId', [
+                'wechatMiniProgramAppId' => $miniAppId,
+            ]);
+        }
+
+        return $result;
     }
 
     /**
@@ -244,7 +260,19 @@ class ConfigService extends BaseService
     public function getConfigByBizCode(array $bizCodes)
     {
         $data =  Config::whereIn('biz_code', $bizCodes)->column('biz_val', 'biz_code');
-        return $this->dealConfigData($data);
+        $result = $this->dealConfigData($data);
+
+        if (in_array('wechatMiniProgramAppId', $bizCodes)) {
+            $miniAppId = $result['wechatMiniProgramAppId'] ?? null;
+            if (empty($miniAppId)) {
+                Log::warning('【ConfigService::getConfigByBizCode 排查】查询 wechatMiniProgramAppId 为空', [
+                    'exists_in_db' => isset($data['wechatMiniProgramAppId']),
+                    'raw_db_val' => $data['wechatMiniProgramAppId'] ?? 'KEY_NOT_FOUND',
+                ]);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -291,6 +319,12 @@ class ConfigService extends BaseService
             throw new ApiException(/** LANG */ '#data数据错误');
         }
         foreach ($data as $itemKey => $itemVal) {
+            if ($itemKey === 'wechatMiniProgramAppId') {
+                Log::info('【ConfigService::saveConfig 排查】正在保存/更新 wechatMiniProgramAppId 到数据库', [
+                    'itemVal' => $itemVal,
+                    'is_empty' => empty($itemVal)
+                ]);
+            }
             $config = Config::where('biz_code', $itemKey)->find();
             if (!$config) {
                 // 设置项不存在则新增

@@ -409,6 +409,10 @@ class WechatPayService extends PayService
                 break;
             case self::MINI_PROGRAM_PAY:
                 $appid = Config::get('wechatMiniProgramAppId');
+                if (empty($appid)) {
+                    \think\facade\Log::error('【微信小程序支付错误】Config::get(\'wechatMiniProgramAppId\') 读取结果为空！请排查数据库 config 表 biz_code=wechatMiniProgramAppId 的记录，或重新在后台【系统设置】保存。');
+                    throw new ApiException(Util::lang('请先在后台【系统设置】中配置微信小程序 AppID！'));
+                }
                 break;
             case self::APP_PAY:
                 $appid = Config::get('wechatPayAppId');
