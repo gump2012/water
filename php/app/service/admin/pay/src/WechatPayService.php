@@ -293,7 +293,9 @@ class WechatPayService extends PayService
      */
     public function getPayData(string $out_trade_no, float $total_fee, string $notify_url = '', string $openid = '', int $is_wap = 0): array
     {
-
+        if (empty($this->appId)) {
+            $this->getApplication();
+        }
         $total_fee = intval($total_fee * 100);
         //查询是否是服务商模式
         $config = Config::getConfig();
