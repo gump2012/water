@@ -206,6 +206,7 @@ class Pay extends IndexBaseController
     public function notify(): string|Response
     {
         $pay_type = input('payCode', '');
+        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [Pay Controller] notify called, pay_type=' . var_export($pay_type, true) . "\n", FILE_APPEND);
         \think\facade\Log::info('支付回调：' . $pay_type);
         try {
             switch ($pay_type) {
@@ -228,6 +229,7 @@ class Pay extends IndexBaseController
                     $res = app(WechatPayService::class)->notify();
             }
         } catch (\Exception $exception) {
+            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [Pay Controller] notify EXCEPTION: ' . $exception->getMessage() . "\nTrace: " . $exception->getTraceAsString() . "\n", FILE_APPEND);
             \think\facade\Log::error('支付回调异常 [' . $pay_type . ']：' . $exception->getMessage() . ' trace: ' . $exception->getTraceAsString());
             return json_encode(['code' => 'FAIL', 'message' => Util::lang('失败')]);
         }

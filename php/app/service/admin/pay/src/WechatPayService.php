@@ -119,18 +119,26 @@ class WechatPayService extends PayService
      */
     public function notify(): array
     {
-        $message = request()->post();
-        if ($message['event_type'] === 'TRANSACTION.SUCCESS') {
+        $rawContent = request()->getContent();
+        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] rawContent=' . $rawContent . "\n", FILE_APPEND);
+        $message = json_decode($rawContent, true);
+        if (empty($message)) {
+            $message = request()->post();
+        }
+        @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] parsed message=' . json_encode($message, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+        if (isset($message['event_type']) && $message['event_type'] === 'TRANSACTION.SUCCESS') {
             $resource = $message['resource'];
             //1.解密参数
             $data = $this->decryptToString($resource['associated_data'], $resource['nonce'], $resource['ciphertext']);
+            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] decrypted data=' . var_export($data, true) . "\n", FILE_APPEND);
             $data = json_decode($data, true);
             //查询订单
             $query_data = $this->queryOrderPay($data['out_trade_no']);
-            if ($query_data['trade_state'] == 'SUCCESS') {
-                //支付成功--设置订单未已支付
+            @file_put_contents(app()->getRootPath() . '/runtime/test_pay.log', date('Y-m-d H:i:s') . ' [WechatPay Notify] queryOrderPay result=' . json_encode($query_data, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+            if (isset($query_data['trade_state']) && $query_data['trade_state'] == 'SUCCESS') {
+                //支付成功--设置订单已支付
                 $pay_sn = $query_data['out_trade_no'];
-                app(PaymentService::class)->paySuccess($pay_sn, $query_data['transaction_id'], $query_data['appid']);
+                app(PaymentService::class)->paySuccess($pay_sn, $query_data['transaction_id'] ?? '', $query_data['appid'] ?? '');
                 return ['code' => 'SUCCESS', 'message' => Util::lang('支付成功')];
             }
             return ['code' => 'FAIL', 'message' => Util::lang('失败')];
