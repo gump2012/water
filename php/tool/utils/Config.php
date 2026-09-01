@@ -33,7 +33,10 @@ class Config
             $val = isset($config[$name]) ? $config[$name] : $default;
         }
 
-        if ($name === 'wechatMiniProgramAppId' && empty($val)) {
+        if ($name === 'wechatMiniProgramAppId') {
+            $logMsg = date('Y-m-d H:i:s') . ' [Config::get] name=' . $name . ', val=' . var_export($val, true) . ', key_exists_in_cached_config=' . (isset($config[$name]) ? 'true' : 'false') . "\n";
+            @file_put_contents(app()->getRootPath() . 'runtime/test_pay.log', $logMsg, FILE_APPEND);
+
             Log::warning('【Config::get 排查】获取 wechatMiniProgramAppId 为空', [
                 'name' => $name,
                 'default' => $default,
@@ -57,6 +60,9 @@ class Config
         $code = 'base';
         if (!isset(self::$config[$code])) {
             self::$config[$code] = app(ConfigService::class)->getAllConfig();
+            $logMsg = date('Y-m-d H:i:s') . ' [Config::getConfig] Initialized static::$config[\'base\'], wechatMiniProgramAppId=' . var_export(self::$config[$code]['wechatMiniProgramAppId'] ?? 'KEY_NOT_FOUND', true) . "\n";
+            @file_put_contents(app()->getRootPath() . 'runtime/test_pay.log', $logMsg, FILE_APPEND);
+
             Log::info('【Config::getConfig】从数据库初始化全局配置静态缓存 static::$config[\'base\']');
         }
         return self::$config[$code];
