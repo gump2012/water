@@ -191,7 +191,7 @@ const validateDomain = (rule: any, value: any, callback: any) => {
         callback();
         return;
     }
-    const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    const urlPattern = /^(https?:\/\/)?(([\da-z.-]+)\.([a-z.]{2,6})|localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?([/\w .-]*)*\/?$/i;
     if (!urlPattern.test(value)) {
         callback(new Error("请输入正确的域名格式"));
         return;

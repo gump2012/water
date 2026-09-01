@@ -36,10 +36,20 @@ abstract class PayService
      */
     public function getDomain(): string
     {
-        $domain = Config::get('pcDomain');
+        $domain = Config::get('h5Domain') ?: Config::get('pcDomain');
         if (empty($domain)) {
-            $scheme = $_SERVER['REQUEST_SCHEME'] ?? ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
-            $host = $_SERVER['HTTP_HOST'] ?? (request()->host() ?: 'localhost');
+            $isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') 
+                    || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') 
+                    || (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] === 'https');
+            $scheme = $isHttps ? 'https' : 'http';
+            $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? ($_SERVER['HTTP_HOST'] ?? (request()->host() ?: 'localhost'));
+
+            if (!str_contains($host, ':')) {
+                $port = $_SERVER['HTTP_X_FORWARDED_PORT'] ?? ($_SERVER['SERVER_PORT'] ?? '');
+                if (!empty($port) && $port != 80 && $port != 443) {
+                    $host .= ':' . $port;
+                }
+            }
             $domain = $scheme . '://' . $host;
         }
         return rtrim($domain, '/');
