@@ -93,6 +93,16 @@ class PayLogService extends BaseService
     }
 
     /**
+     * 根据支付日志ID获取支付日志详情
+     * @param int $id
+     * @return array
+     */
+    public function getPayLogById(int $id): array
+    {
+        return PayLogModel::where('paylog_id', $id)->findOrEmpty()->toArray();
+    }
+
+    /**
      * 获取唯一支付订单号
      * @return string
      */
