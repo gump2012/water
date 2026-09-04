@@ -7,10 +7,13 @@
 ## 1. Project Overview
 
 * **Project Name**: Tigshop E-Commerce Platform
-* **Backend Stack**: ThinkPHP 8 (PHP 8.2), MySQL 8.0, Redis, Think-Queue, Swoole
+* **Backend Stack**: ThinkPHP 8 (PHP 8.2), MySQL 5.7, Redis, Think-Queue, Swoole
 * **Frontend Admin**: Vue 3 + Vite + TypeScript + Element Plus (SPA)
 * **Frontend Mobile (H5)**: UniApp (Vue 3 + Vite + TypeScript)
-* **Hosting Environment**: Ubuntu 22.04 LTS ECS Instance (`39.96.41.191`) managed via BT-Panel (宝塔面板)
+* **Hosting Environment**:
+  - **Active Production Server**: Ubuntu 24.04 LTS ECS Instance (`47.104.227.47`, 华北1 青岛)
+  - **Legacy / Cold-Standby**: Ubuntu 22.04 LTS ECS Instance (`39.96.41.191`, 华北2 北京)
+  - Management: BT-Panel (宝塔面板)
 
 ---
 
@@ -19,12 +22,13 @@
 ```
 [ Client Browser / Mobile User ]
        │
+       ├── Main Domain (HTTP/S) ───>  https://lxxshop.com:80 / 443
        ├── Admin Panel (HTTPS)  ───>  https://lxxshop.com:9527
        └── UniApp H5 (HTTPS)    ───>  https://lxxshop.com:8001
                                                │
                                                ▼
 ┌───────────────────────────────────────────────────────────────────────────┐
-│ Ubuntu 22.04 ECS (`39.96.41.191`)                                         │
+│ Ubuntu 24.04 ECS (`47.104.227.47`)                                        │
 │                                                                           │
 │  ┌──────────────────────────────┐        ┌──────────────────────────────┐ │
 │  │ Port 8001 (Nginx Site)       │        │ Port 9527 (Nginx Site)       │ │
@@ -34,18 +38,25 @@
 │  └──────────────┬───────────────┘        └──────────────┬───────────────┘ │
 │                 │ /api Proxy                            │ /adminapi Proxy │
 │                 └───────────────────┬───────────────────┘                 │
-│                                     ▼                                     │
-│                     ┌──────────────────────────────┐                      │
-│                     │ Port 8000 (PHP CLI Service)  │                      │
-│                     │ ThinkPHP 8 Application API   │                      │
-│                     │ Process Guard: Supervisor    │                      │
-│                     └───────────────┬──────────────┘                      │
-│                                     │ MySQL Connection                    │
-│                                     ▼                                     │
-│                     ┌──────────────────────────────┐                      │
-│                     │ Port 3306 (MySQL Database)   │                      │
-│                     │ DB: `user` | User: `user`    │                      │
-│                     └──────────────────────────────┘                      │
+│                                     │                                     │
+│  ┌──────────────────────────────┐   │                                     │
+│  │ Port 80/443 (Nginx Site)     │   │                                     │
+│  │ Let's Encrypt Host & Fallback│───┘                                     │
+│  │ Root: /www/water/php         │                                         │
+│  └──────────────┬───────────────┘                                         │
+│                 │ /api Proxy                                              │
+│                 ▼                                                         │
+│ ┌──────────────────────────────┐                                          │
+│ │ Port 8000 (PHP CLI Service)  │                                          │
+│ │ ThinkPHP 8 Application API   │                                          │
+│ │ Process Guard: Supervisor    │                                          │
+│ └───────────────┬──────────────┘                                          │
+│                 │ MySQL Connection                                        │
+│                 ▼                                                         │
+│ ┌──────────────────────────────┐                                          │
+│ │ Port 3306 (MySQL Database)   │                                          │
+│ │ DB: `user` | User: `user`    │                                          │
+│ └──────────────────────────────┘                                          │
 └───────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -53,8 +64,9 @@
 
 | Component | Endpoint / Location | Tech & Process | Details |
 | :--- | :--- | :--- | :--- |
-| **MySQL DB** | `localhost:3306` | MySQL 8.0 | DB: `user` \| User: `user` \| Pass: `123456` |
-| **PHP Backend API**| `http://127.0.0.1:8000` | ThinkPHP 8 / PHP 8.2 | Guarded by BT Supervisor (`php think run -p 8000`) |
+| **MySQL DB** | `localhost:3306` | MySQL 5.7.44 | DB: `user` \| User: `user` \| Pass: `123456` |
+| **PHP Backend API**| `http://127.0.0.1:8000` | ThinkPHP 8 / PHP 8.2 | Guarded by BT Supervisor (`/www/server/php/82/bin/php think run -p 8000`) |
+| **Main Web Entrance**| `https://lxxshop.com` (80/443) | PHP 8.2 + Nginx | Root: `/www/water/php`, Let's Encrypt validation & `/api/` fallback |
 | **Admin Panel** | `https://lxxshop.com:9527` | Pure Static + Nginx | Root: `/www/water/view/Tigshop-Admin/admin-dist` |
 | **UniApp H5** | `https://lxxshop.com:8001` | Pure Static + Nginx | Root: `/www/water/view/Tigshop-Uniapp/dist/build/h5` |
 
@@ -129,6 +141,42 @@ VITE_BASE_DIR =
      ```bash
      php -r '$hash = password_hash("123456", PASSWORD_DEFAULT); $m = new mysqli("127.0.0.1", "user", "123456", "user"); $s = $m->prepare("UPDATE admin_user SET password = ? WHERE username = \"admin\""); $s->bind_param("s", $hash); $s->execute();'
      ```
+
+6. **PHP Swoole Extension Missing (`topthink/think-swoole`)**:
+   - `composer install` fails with `topthink/think-swoole requires ext-swoole >= 4.4.8`.
+   - **Fix**: Install the `swoole` extension in BT-Panel PHP 8.2 settings before running `composer install`. Also run `composer self-update` to eliminate PHP 8.2 return-type notices.
+
+7. **Composer Disabled Functions**:
+   - Running `composer install` requires `putenv`, `proc_open`, `proc_get_status` in addition to `passthru`, `exec`, `shell_exec`, `system`. All these must be removed from `disable_functions` in BT-Panel PHP 8.2 settings.
+
+8. **Node.js & npm Path Environment in BT-Panel**:
+   - BT Node.js Version Manager installs to `/www/server/nodejs/v<ver>/bin` which is not in the default shell `$PATH`.
+   - **Fix**: Write global profile export:
+     ```bash
+     cat >/etc/profile.d/nodejs.sh <<'EOF'
+     export PATH=/www/server/nodejs/v24.18.1/bin:$PATH
+     EOF
+     chmod +x /etc/profile.d/nodejs.sh
+     grep -q '/www/server/nodejs/v24.18.1/bin' /root/.bashrc || echo 'export PATH=/www/server/nodejs/v24.18.1/bin:$PATH' >> /root/.bashrc
+     source /etc/profile.d/nodejs.sh && source /root/.bashrc
+     ```
+
+9. **Static Storage Alias (`/storage/`) in Nginx**:
+   - Uploaded media files are stored locally in `/www/water/php/public/storage/`.
+   - Both the Admin site (`9527`) and H5 site (`8001`) Nginx configs must include:
+     ```nginx
+     location /storage/ {
+         alias /www/water/php/public/storage/;
+     }
+     ```
+     Without this, image requests to `https://lxxshop.com:9527/storage/...` or `https://lxxshop.com:8001/storage/...` return 404 broken images.
+
+10. **Supervisor Stuck 8000 Port Recovery**:
+    - If restarting the Supervisor daemon fails because port 8000 is still held:
+      ```bash
+      lsof -i:8000 | awk 'NR>1 {print $2}' | xargs kill -9
+      ```
+    - Supervisor program path: `/www/server/php/82/bin/php think run -p 8000` under directory `/www/water/php/`.
 
 ---
 
