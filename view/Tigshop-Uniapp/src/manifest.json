@@ -128,10 +128,6 @@
     "mp-weixin": {
         "appid": "wx05765a204a5b2ef3",
         "__usePrivacyCheck__": true,
-        "requiredPrivateInfos": [
-            "chooseLocation",
-            "chooseAddress"
-        ],
         "setting": {
             "urlCheck": true,
             "es6": true,
@@ -142,9 +138,6 @@
         },
         "usingComponents": true,
         "permission": {
-            "scope.userLocation": {
-                "desc": "获取您的位置信息"
-            },
             "scope.writePhotosAlbum": {
                 "desc": "为了更好地为您提供服务"
             }
