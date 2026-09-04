@@ -35,6 +35,45 @@
                 </up-form-item>
             </up-form>
         </view>
+        <!-- 提现规则说明 (微信小程序审核合规必备) -->
+        <view class="rule-card">
+            <view class="rule-title">
+                <view class="rule-title-bar"></view>
+                <text>{{ $t("提现规则说明") }}</text>
+            </view>
+            <view class="rule-list">
+                <view class="rule-item">
+                    <text class="rule-num">1. </text>
+                    <text class="rule-label">{{ $t("可提现额度：") }}</text>
+                    <text class="rule-desc">{{ $t("单笔最低提现 1.00 元，单笔最高 50,000.00 元，单次提现金额不得超过账户可用余额。") }}</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-num">2. </text>
+                    <text class="rule-label">{{ $t("每日提现次数：") }}</text>
+                    <text class="rule-desc">{{ $t("同一账户每日最多可提交 3 次提现申请。") }}</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-num">3. </text>
+                    <text class="rule-label">{{ $t("提现申请时间：") }}</text>
+                    <text class="rule-desc">{{ $t("全天 7×24 小时均可提交提现申请。") }}</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-num">4. </text>
+                    <text class="rule-label">{{ $t("预计到账时间：") }}</text>
+                    <text class="rule-desc">{{ $t("提交申请后预计 1~3 个工作日完成审核并原路打款（周末及法定节假日顺延）。") }}</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-num">5. </text>
+                    <text class="rule-label">{{ $t("提现手续费：") }}</text>
+                    <text class="rule-desc">{{ $t("提现暂免收平台手续费，实际到账金额以银行或第三方支付机构入账为准。") }}</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-num">6. </text>
+                    <text class="rule-label">{{ $t("注意事项：") }}</text>
+                    <text class="rule-desc">{{ $t("请确保填写的收款账户姓名与实际开户人/实名认证一致，避免因信息错误导致退款或提现失败。") }}</text>
+                </view>
+            </view>
+        </view>
     </view>
     <tig-fixed-placeholder background-color="#fff">
         <view class="btn-box">
@@ -299,6 +338,61 @@ const backDetail = () => {
             padding-left: 170rpx;
             navigator {
                 display: inline;
+            }
+        }
+    }
+
+    .rule-card {
+        background-color: #fff;
+        border-radius: 10rpx;
+        padding: 24rpx;
+        margin-bottom: 30rpx;
+
+        .rule-title {
+            display: flex;
+            align-items: center;
+            font-size: 28rpx;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20rpx;
+
+            .rule-title-bar {
+                width: 6rpx;
+                height: 28rpx;
+                background-color: var(--general);
+                border-radius: 4rpx;
+                margin-right: 12rpx;
+            }
+        }
+
+        .rule-list {
+            .rule-item {
+                display: flex;
+                align-items: flex-start;
+                font-size: 24rpx;
+                line-height: 1.6;
+                margin-bottom: 12rpx;
+                color: #666;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                .rule-num {
+                    color: #999;
+                    flex-shrink: 0;
+                }
+
+                .rule-label {
+                    color: #333;
+                    font-weight: 500;
+                    flex-shrink: 0;
+                }
+
+                .rule-desc {
+                    color: #666;
+                    flex: 1;
+                }
             }
         }
     }
