@@ -27,6 +27,10 @@
         <!-- #endif -->
 
         <tig-statistic-log ref="statisticLogRef" :immediate-log="immediateLog" :product-id="productId" />
+
+        <!-- #ifdef MP-WEIXIN -->
+        <tig-privacy-popup />
+        <!-- #endif -->
     </view>
 </template>
 

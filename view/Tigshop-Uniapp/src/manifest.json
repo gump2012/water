@@ -127,6 +127,7 @@
     /* 小程序特有相关 */
     "mp-weixin": {
         "appid": "wx05765a204a5b2ef3",
+        "__usePrivacyCheck__": true,
         "setting": {
             "urlCheck": true,
             "es6": true,

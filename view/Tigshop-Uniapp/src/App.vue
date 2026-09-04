@@ -4,6 +4,9 @@ import { useConfigStore } from "@/store/config";
 import checkAppUpdate from "@/utils/checkAppUpdate";
 import { isDemo } from "@/utils";
 import init from "@/utils/init";
+// #ifdef MP-WEIXIN
+import { initPrivacyAuthorization } from "@/utils/privacy";
+// #endif
 
 // #ifdef H5
 const isInIframe = () => {
@@ -41,6 +44,8 @@ onLaunch(async () => {
 
     // #ifdef MP-WEIXIN
     useConfigStore().getMenuButtonInfo();
+    // 注册隐私授权监听,在调用受保护隐私接口前自动弹出授权弹窗
+    initPrivacyAuthorization();
     // #endif
     try {
         await init();
