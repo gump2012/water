@@ -50,7 +50,7 @@ const handleClick = () => {
         if (type === 2 || type === 1) {
             //企业微信客服
             wx.openCustomerServiceChat({
-                extInfo: { customUrl },
+                extInfo: { url: customUrl, customUrl },
                 corpId: userStore.serviceConfig.corpId,
                 success(res: any) {},
                 fail(res: any) {
